@@ -1,0 +1,50 @@
+---
+- name: implimenting CI-CD
+  hosts: all
+  tasks:
+   - name: installing sofwares on all nodes
+     apt:
+      name: "{{item.a}}"
+      state: "{{item.b}}"
+      update_cache: "{{item.c}}"
+     with_items:
+      - {a: git,b: present,c: yes}
+      - {a: openjdk-8-jdk,b: present,c: no}
+      - {a: maven, b: present,c: no}
+      - {a: tomcat8,b: present,c: no}
+      - {a: tomcat8-admin,b: present,c: no}
+- name: work on devserver
+  hosts: devserver
+  tasks:
+   - name: activities on devserver
+     git:
+      repo: https://github.com/intelliqittrainings/maven.git 
+      dest: /home/ubuntu/devops
+   - name: build the code
+     shell: cd /home/ubuntu/devops;mvn package
+   - name: pull the artifact from managed node
+     fetch:
+      src: /home/ubuntu/devops/webapp/target/webapp.war
+      dest: /tmp
+- name: working on qa server
+  hosts: qaserver
+  tasks:
+   - name: inmplementing on qa server
+     copy:
+      src: /tmp/172.31.37.140/home/ubuntu/devops/webapp/target/webapp.war 
+      dest: /var/lib/tomcat8/testapp.war
+   - name: download testing program
+     git:
+      repo: https://github.com/selenium-saikrishna/FunctionalTesting.git
+      dest: /home/ubuntu/testing
+   - name: run the test program
+     shell: java -jar /home/ubuntu/testing/testing.jar
+- name: working on prod server
+  hosts: prodserver
+  tasks:
+   - name: deploy artifact to production servers
+     copy:
+      src: /tmp/172.31.37.140/home/ubuntu/devops/webapp/target/webapp.war
+      dest: /var/lib/tomcat8/webapps/prod.war
+
+

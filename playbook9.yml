@@ -1,0 +1,12 @@
+---
+- name: debug module
+  hosts: all
+  tasks:
+   - name: install tree
+     apt:
+      name: tree
+      state: present
+     register: a
+   - name: display the output
+     debug:
+      var: a

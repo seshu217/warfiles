@@ -1,0 +1,14 @@
+---
+- name: installing git
+  hosts: all
+  vars:
+   - a: git
+   - b: present
+   - c: yes
+  tasks:
+   - name: software installation
+     apt:
+      name: "{{a}}"
+      state: "{{b}}"
+      update_cache: "{{c}}"
+

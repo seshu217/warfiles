@@ -1,0 +1,17 @@
+---
+- name: create a file if file is not exist
+  hosts: all
+  tasks:
+   - name: using stat for check the file or directories
+     stat:
+      path: /home/ubuntu/dir1
+     register: a
+   - name: display the output
+     debug:
+      var: a
+   - name: create a directory
+     file:
+      name: dir1
+      state: directory
+     when:
+      a.stat.exists==false

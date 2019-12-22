@@ -1,0 +1,28 @@
+---
+- name: install apache2 on alla the servers
+  hosts: all
+  tasks:
+   - name: installing apache2
+     apt:
+      name: apache2
+      state: present
+      update_cache: yes
+     notify: check_url_response
+   - name: edit html 
+     copy:
+      dest: /var/www/html/index.html
+      content: "hi seshu\n"
+     notify: restart_service
+  handlers:
+   - name: check_url_response
+     service:
+      name: apache2
+      state: restarted
+   - name: restart_service
+     uri:
+      url: "{{item}}"
+      status_code: 200
+     with_items:
+      - http://172.31.33.23
+      - http://172.31.43.102
+      - http://172.31.37.140  

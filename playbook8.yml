@@ -1,0 +1,13 @@
+---
+- name: conditional statements
+  hosts: all
+  vars:
+   - a: 10
+  tasks:
+   - name: tomcat uninstall
+     yum:
+      name: tomcat8
+      state: absent
+     when:
+             a == 10 
+

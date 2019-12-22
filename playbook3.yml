@@ -1,0 +1,10 @@
+---
+- name: group of machines
+  hosts: devserver
+  tasks:
+   - name: do activities
+     user:
+      name: "{{a}}"
+      password: "{{b}}"
+      home: "{{c}}"
+      uid: "{{d}}"

@@ -1,0 +1,16 @@
+---
+- name: install tomcat8
+  hosts: all
+  tasks:
+   - name: block section
+     block:
+      - name: redhot linux
+        yum:
+         name: tomcat8
+         state: absent
+     rescue:
+      - name: ubuntu
+        apt:
+         name: tomcat8
+         state: absent
+

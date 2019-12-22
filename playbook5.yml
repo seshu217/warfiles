@@ -1,0 +1,24 @@
+---
+- name: install tomacat
+  hosts: all
+  tasks:
+   - block:
+      - name: install tomcat7
+        apt:
+         name: tomcat7
+         state: present
+         update_cache: yes
+     rescue:
+      - name: install tomcat8
+        apt:
+         name: tomcat8
+         state: present
+         update_cache: no
+     always:
+      - name: replace port number
+        replace:
+         regexp: '8080'
+         replace: '9090'
+         path: /etc/tomcat8/server.xml
+
+

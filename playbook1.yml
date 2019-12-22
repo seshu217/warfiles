@@ -1,0 +1,8 @@
+---
+- name: global scope variables
+  hosts: all
+  tasks:
+   - apt:
+      name: "{{a}}"
+      state: "{{b}}"
+      update_cache: "{{c}}"
