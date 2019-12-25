@@ -1,0 +1,10 @@
+---
+- name: install docker on all managed nodes
+  hosts: all
+  tasks:
+   - name: install docker
+     shell: "{{item}}"
+     with_items: 
+      - curl -fsSL https://get.docker.com -o get-docker.sh
+      - sh get-docker.sh
+

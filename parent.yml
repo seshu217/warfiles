@@ -1,0 +1,6 @@
+---
+- name: using inculde module call child playbook
+  hosts: all
+  tasks:
+   - name: parent playbook
+     include: child.yml

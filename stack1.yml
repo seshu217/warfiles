@@ -1,0 +1,12 @@
+version: '3'
+services:
+ mydb:
+  image: mysql
+  environment:
+   MYSQL_ROOT_PASSWORD: seshu
+ mywordpress:
+  image: wordpress
+  ports:
+   - 6060:80
+  deploy:
+   replicas: 3

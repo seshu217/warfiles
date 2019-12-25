@@ -1,0 +1,39 @@
+version: '3.1'
+services:
+ hub:
+  image: selenium/hub
+  ports:
+   - 4444:4444
+  deploy:
+   placement:
+    constraints:
+     - node.hostname==devserver
+   resources:
+    limits:
+     cpus: "0.02"
+     memory: 100m
+ chrome: 
+  image: selenium/node-chrome-debug
+  ports:
+   - 5901:5900
+  deploy:
+   placement:
+    constraints:
+     - node.hostname==qaserver
+   resources:
+    limits:
+     cpus: "0.01"
+     memory: 50m
+ firefox:
+  image: selenium/node-firefox-debug
+  ports:
+   - 5902:5900
+  deploy:
+   placement:
+    constraints:
+     - node.hostname==prodserver
+   resources:
+    limits:
+     cpus: "0.01"
+     memory: 50m
+
